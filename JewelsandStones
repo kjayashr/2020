@@ -1,0 +1,10 @@
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        HashMap<Character,Integer> map = new HashMap<Character,Integer>();
+        int sum =0;
+        for(char c : S.toCharArray()) map.put(c,map.getOrDefault(c,0)+1);        
+        for(char j :J.toCharArray())
+        { if(map.containsKey(j)) sum+=map.get(j);}
+        return sum; 
+    }
+}
