@@ -1,0 +1,16 @@
+class MaxSumSubArrayOfSizeK {
+  public static int findMaxSumSubArray(int k, int[] arr) {
+   
+   int maxSoFar=0;
+   for(int i =0; i < arr.length-k;i++)
+   {
+     int sumSoFar=0;
+     for(int j = i ; j < i+k; j++ )
+     {
+        sumSoFar+=arr[j];
+     }
+   maxSoFar =  Math.max(sumSoFar,maxSoFar);
+   }
+    return maxSoFar;
+  }
+}
