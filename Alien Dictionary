@@ -1,0 +1,65 @@
+class Solution {
+    public String alienOrder(String[] words) {
+        HashMap<Character,Integer> indegree = new HashMap<Character,Integer>();
+        HashMap<Character,Set<Character>> map = new HashMap<Character,Set<Character>>();
+        String result="";
+         if(words==null || words.length==0) return result;
+        //Intialize indegree 0 for each character
+        for(String word:words)
+        {
+            for(char c:word.toCharArray())
+            {
+                indegree.put(c,0);
+            }
+        }
+        //Calculate Indegree for each character.
+        for(int i = 0; i<words.length-1;i++)
+        {
+            String cWord = words[i];
+            String nWord = words[i+1];
+            for(int j = 0 ;j<(Math.min(cWord.length(),nWord.length()));j++ ){
+                char c1 = cWord.charAt(j);
+                char n1 = nWord.charAt(j);
+                
+                if(c1!=n1)
+                {
+                    System.out.println(c1);
+                 Set<Character> set = new HashSet<Character>();
+            
+                    if(map.containsKey(c1))
+                    {
+                        
+                        set = map.get(c1);
+                    }
+                    if(!set.contains(n1))
+                    {
+                        set.add(n1);
+                        map.put(c1, set);
+                        indegree.put(n1,indegree.get(n1)+1);
+                    }
+                    break;
+                }
+            }
+        }
+        
+ 
+        
+        Queue<Character> q=new LinkedList<Character>();
+       
+        for(char c: indegree.keySet()){
+          if(indegree.get(c)==0) q.add(c);
+        }
+        
+    while(!q.isEmpty()){
+        char c=q.remove();
+        result+=c;
+        if(map.containsKey(c)){
+            for(char c2: map.get(c)){
+                indegree.put(c2,indegree.get(c2)-1);
+                if(indegree.get(c2)==0) q.add(c2);
+            }
+        }
+    }
+    if(result.length()!=indegree.size()) return "";
+    return result;
+    }
